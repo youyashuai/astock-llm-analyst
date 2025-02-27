@@ -19,45 +19,45 @@ def generate_trading_signals(df):
     signals = []
 
     # MACD信号
-    if df['MACD'].iloc[-1] > 0 >= df['MACD'].iloc[-2]:
+    if df['MACD']。iloc[-1] > 0 >= df['MACD']。iloc[-2]:
         signals.append("MACD金叉形成，可能上涨")
-    elif df['MACD'].iloc[-1] < 0 <= df['MACD'].iloc[-2]:
+    elif df['MACD']。iloc[-1] < 0 <= df['MACD']。iloc[-2]:
         signals.append("MACD死叉形成，可能下跌")
 
     # KDJ信号
-    if df['K'].iloc[-1] < 20 and df['D'].iloc[-1] < 20:
+    if df['K']。iloc[-1] < 20 和 df['D']。iloc[-1] < 20:
         signals.append("KDJ超卖，可能反弹")
-    elif df['K'].iloc[-1] > 80 and df['D'].iloc[-1] > 80:
+    elif df['K']。iloc[-1] > 80 和 df['D']。iloc[-1] > 80:
         signals.append("KDJ超买，注意回调")
 
     # RSI信号
-    if df['RSI'].iloc[-1] < 20:
+    if df['RSI']。iloc[-1] < 20:
         signals.append("RSI超卖，可能反弹")
-    elif df['RSI'].iloc[-1] > 80:
+    elif df['RSI']。iloc[-1] > 80:
         signals.append("RSI超买，注意回调")
 
     # BOLL带信号
-    if df['close'].iloc[-1] > df['BOLL_UP'].iloc[-1]:
+    if df['close']。iloc[-1] > df['BOLL_UP']。iloc[-1]:
         signals.append("股价突破布林上轨，超买状态")
-    elif df['close'].iloc[-1] < df['BOLL_LOW'].iloc[-1]:
+    elif df['close']。iloc[-1] < df['BOLL_LOW']。iloc[-1]:
         signals.append("股价跌破布林下轨，超卖状态")
 
     # DMI信号
-    if df['PDI'].iloc[-1] > df['MDI'].iloc[-1] and df['PDI'].iloc[-2] <= df['MDI'].iloc[-2]:
+    if df['PDI']。iloc[-1] > df['MDI']。iloc[-1] 和 df['PDI']。iloc[-2] <= df['MDI']。iloc[-2]:
         signals.append("DMI金叉，上升趋势形成")
-    elif df['PDI'].iloc[-1] < df['MDI'].iloc[-1] and df['PDI'].iloc[-2] >= df['MDI'].iloc[-2]:
+    elif df['PDI']。iloc[-1] < df['MDI']。iloc[-1] 和 df['PDI']。iloc[-2] >= df['MDI']。iloc[-2]:
         signals.append("DMI死叉，下降趋势形成")
 
     # 成交量分析
-    if df['VR'].iloc[-1] > 160:
+    if df['VR']。iloc[-1] > 160:
         signals.append("VR大于160，市场活跃度高")
-    elif df['VR'].iloc[-1] < 40:
+    elif df['VR']。iloc[-1] < 40:
         signals.append("VR小于40，市场活跃度低")
 
     # ROC动量分析
-    if df['ROC'].iloc[-1] > df['MAROC'].iloc[-1] and df['ROC'].iloc[-2] <= df['MAROC'].iloc[-2]:
+    if df['ROC']。iloc[-1] > df['MAROC']。iloc[-1] 和 df['ROC']。iloc[-2] <= df['MAROC']。iloc[-2]:
         signals.append("ROC上穿均线，上升动能增强")
-    elif df['ROC'].iloc[-1] < df['MAROC'].iloc[-1] and df['ROC'].iloc[-2] >= df['MAROC'].iloc[-2]:
+    elif df['ROC']。iloc[-1] < df['MAROC']。iloc[-1] 和 df['ROC']。iloc[-2] >= df['MAROC']。iloc[-2]:
         signals.append("ROC下穿均线，上升动能减弱")
 
     return signals if signals else ["当前无明显交易信号"]
@@ -67,7 +67,7 @@ def plot_to_base64(fig):
     buffer = BytesIO()
     fig.savefig(buffer, format='png', bbox_inches='tight', dpi=100)
     buffer.seek(0)
-    image_base64 = base64.b64encode(buffer.getvalue()).decode()
+    image_base64 = base64.b64encode(buffer.getvalue())。decode()
     plt.close(fig)
     return image_base64
 
@@ -75,7 +75,7 @@ def plot_to_base64(fig):
 def _get_value_class(value):
     """根据数值返回CSS类名"""
     try:
-        if isinstance(value, str) and '%' in value:
+        if isinstance(value, str) 和 '%' in value:
             value = float(value.strip('%'))
         elif isinstance(value, str):
             return 'neutral'
@@ -118,7 +118,7 @@ class StockAnalyzer:
 
     def get_stock_name(self, code):
         """根据股票代码获取股票名称"""
-        return {v: k for k, v in self.stock_names.items()}.get(code, code)
+        return {v: k for k, v in self.stock_names。items()}。get(code, code)
 
     def fetch_data(self):
         """获取股票数据"""
@@ -132,7 +132,7 @@ class StockAnalyzer:
 
     def calculate_indicators(self, code):
         """计算技术指标"""
-        df = self.data[code].copy()
+        df = self.data[code]。copy()
         close = np.array(df['close'])
         open_price = np.array(df['open'])
         high = np.array(df['high'])
@@ -221,13 +221,13 @@ class StockAnalyzer:
         def _style_axis(ax: Axes, title: str):
             """统一设置坐标轴样式"""
             ax.set_title(title, pad=12)
-            ax.spines['top'].set_visible(False)
-            ax.spines['right'].set_visible(False)
-            ax.spines['left'].set_color('#666666')
-            ax.spines['bottom'].set_color('#666666')
+            ax.spines['top']。set_visible(False)
+            ax.spines['right']。set_visible(False)
+            ax.spines['left']。set_color('#666666')
+            ax.spines['bottom']。set_color('#666666')
             ax.tick_params(colors='#666666')
             ax.grid(True, linestyle='--', alpha=0.3)
-            ax.legend(loc='upper left', frameon=True, facecolor='white',
+            ax.legend(loc='upper left', frameon=True, facecolor='white'，
                       edgecolor='none', fontsize=10)
             ax.set_facecolor('#F8F9FA')
 
@@ -267,20 +267,20 @@ class StockAnalyzer:
 
         # 创建图表
         fig = plt.figure(figsize=(15, 32))
-        fig.patch.set_facecolor('#F0F2F6')
+        fig.patch。set_facecolor('#F0F2F6')
 
         # 配色方案
         colors = {
-            'primary': '#2E4053',
-            'ma5': '#E74C3C',
-            'ma10': '#3498DB',
-            'ma20': '#2ECC71',
-            'boll': ['#E74C3C', '#F4D03F', '#2ECC71'],
-            'volume': ['#E74C3C', '#2ECC71']
+            'primary': '#2E4053'，
+            'ma5': '#E74C3C'，
+            'ma10': '#3498DB'，
+            'ma20': '#2ECC71'，
+            'boll': ['#E74C3C'， '#F4D03F'， '#2ECC71']，
+            'volume': ['#E74C3C'， '#2ECC71']
         }
 
         # 主图：K线 + 均线 + BOLL
-        ax1 = plt.subplot2grid((12, 1), (0, 0), rowspan=2)
+        ax1 = plt.subplot2grid((12， 1)， (0， 0), rowspan=2)
         ax1.plot(df.index, df['close'], color=colors['primary'], label='收盘价', alpha=0.8, linewidth=2)
         ax1.plot(df.index, df['MA5'], color=colors['ma5'], label='MA5', alpha=0.7)
         ax1.plot(df.index, df['MA10'], color=colors['ma10'], label='MA10', alpha=0.7)
@@ -291,36 +291,36 @@ class StockAnalyzer:
         _style_axis(ax1, f'{stock_name} ({code}) 技术指标')
 
         # MACD
-        ax2 = plt.subplot2grid((12, 1), (2, 0))
+        ax2 = plt.subplot2grid((12， 1)， (2， 0))
         ax2.plot(df.index, df['DIF'], color='#E74C3C', label='DIF(差离值)', alpha=0.8)
         ax2.plot(df.index, df['DEA'], color='#2ECC71', label='DEA(讯号线)', alpha=0.8)
-        ax2.bar(df.index, df['MACD'], color=np.where(df['MACD'] > 0, '#E74C3C', '#2ECC71'),
+        ax2.bar(df.index, df['MACD'], color=np.where(df['MACD'] > 0， '#E74C3C'， '#2ECC71')，
                 label='MACD(指数平滑异同移动平均线)', alpha=0.6)
         _style_axis(ax2, 'MACD (指数平滑异同移动平均线)')
 
         # KDJ
-        ax3 = plt.subplot2grid((12, 1), (3, 0))
+        ax3 = plt.subplot2grid((12， 1)， (3， 0))
         ax3.plot(df.index, df['K'], color='#E74C3C', label='K(随机指标K值)', alpha=0.8)
         ax3.plot(df.index, df['D'], color='#2ECC71', label='D(随机指标D值)', alpha=0.8)
         ax3.plot(df.index, df['J'], color='#3498DB', label='J(随机指标J值)', alpha=0.8)
         _style_axis(ax3, 'KDJ(随机指标)')
 
         # RSI
-        ax4 = plt.subplot2grid((12, 1), (4, 0))
+        ax4 = plt.subplot2grid((12， 1)， (4， 0))
         ax4.plot(df.index, df['RSI'], color='#8E44AD', label='RSI(相对强弱指标)', alpha=0.8)
         ax4.axhline(y=80, color='#E74C3C', linestyle='--', alpha=0.5)
         ax4.axhline(y=20, color='#2ECC71', linestyle='--', alpha=0.5)
         _style_axis(ax4, 'RSI (相对强弱指标)')
 
         # BIAS
-        ax5 = plt.subplot2grid((12, 1), (5, 0))
+        ax5 = plt.subplot2grid((12， 1)， (5， 0))
         ax5.plot(df.index, df['BIAS1'], color='#E74C3C', label='BIAS1', alpha=0.8)
         ax5.plot(df.index, df['BIAS2'], color='#2ECC71', label='BIAS2', alpha=0.8)
         ax5.plot(df.index, df['BIAS3'], color='#3498DB', label='BIAS3', alpha=0.8)
         _style_axis(ax5, 'BIAS (乖离率)')
 
         # DMI
-        ax6 = plt.subplot2grid((12, 1), (6, 0))
+        ax6 = plt.subplot2grid((12， 1)， (6， 0))
         ax6.plot(df.index, df['PDI'], color='#E74C3C', label='PDI(上升方向线)', alpha=0.8)
         ax6.plot(df.index, df['MDI'], color='#2ECC71', label='MDI(下降方向线)', alpha=0.8)
         ax6.plot(df.index, df['ADX'], color='#3498DB', label='ADX(趋向指标)', alpha=0.8)
@@ -328,32 +328,32 @@ class StockAnalyzer:
         _style_axis(ax6, 'DMI(动向指标)')
 
         # TRIX
-        ax7 = plt.subplot2grid((12, 1), (7, 0))
+        ax7 = plt.subplot2grid((12， 1)， (7， 0))
         ax7.plot(df.index, df['TRIX'], color='#E74C3C', label='TRIX', alpha=0.8)
         ax7.plot(df.index, df['TRMA'], color='#2ECC71', label='TRMA', alpha=0.8)
         _style_axis(ax7, 'TRIX(三重指数平滑平均线)')
 
         # ROC
-        ax8 = plt.subplot2grid((12, 1), (8, 0))
+        ax8 = plt.subplot2grid((12， 1)， (8， 0))
         ax8.plot(df.index, df['ROC'], color='#E74C3C', label='ROC(变动率)', alpha=0.8)
         ax8.plot(df.index, df['MAROC'], color='#2ECC71', label='MAROC(移动平均线)', alpha=0.8)
         _style_axis(ax8, 'ROC(变动率)')
 
         # VR和AR/BR
-        ax9 = plt.subplot2grid((12, 1), (9, 0))
+        ax9 = plt.subplot2grid((12， 1)， (9， 0))
         ax9.plot(df.index, df['VR'], color='#E74C3C', label='VR(成交量比率)', alpha=0.8)
         ax9.plot(df.index, df['AR'], color='#2ECC71', label='AR(人气指标)', alpha=0.8)
         ax9.plot(df.index, df['BR'], color='#3498DB', label='BR(意愿指标)', alpha=0.8)
         _style_axis(ax9, '成交量指标')
 
         # MTM
-        ax10 = plt.subplot2grid((12, 1), (10, 0))
+        ax10 = plt.subplot2grid((12， 1)， (10， 0))
         ax10.plot(df.index, df['MTM'], color='#E74C3C', label='MTM', alpha=0.8)
         ax10.plot(df.index, df['MTMMA'], color='#2ECC71', label='MTMMA', alpha=0.8)
         _style_axis(ax10, 'MTM(动量指标)')
 
         # DMA
-        ax11 = plt.subplot2grid((12, 1), (11, 0))
+        ax11 = plt.subplot2grid((12， 1)， (11， 0))
         ax11.plot(df.index, df['DIF_DMA'], color='#E74C3C', label='DIF_DMA', alpha=0.8)
         ax11.plot(df.index, df['DIFMA_DMA'], color='#2ECC71', label='DIFMA_DMA', alpha=0.8)
         _style_axis(ax11, 'DMA(平行线差指标)')
@@ -371,44 +371,44 @@ class StockAnalyzer:
         analysis_data = {
             "基础数据": {
                 "股票代码": code,
-                "最新收盘价": f"{df['close'].iloc[-1]:.2f}",
-                "涨跌幅": f"{((df['close'].iloc[-1] - df['close'].iloc[-2]) / df['close'].iloc[-2] * 100):.2f}%",
-                "最高价": f"{df['high'].iloc[-1]:.2f}",
-                "最低价": f"{df['low'].iloc[-1]:.2f}",
-                "成交量": f"{int(df['volume'].iloc[-1]):,}",
-            },
+                "最新收盘价": f"{df['close']。iloc[-1]:.2f}"，
+                "涨跌幅": f"{((df['close']。iloc[-1] - df['close']。iloc[-2]) / df['close']。iloc[-2] * 100):.2f}%"，
+                "最高价": f"{df['high']。iloc[-1]:.2f}"，
+                "最低价": f"{df['low']。iloc[-1]:.2f}"，
+                "成交量": f"{int(df['volume']。iloc[-1]):，}"，
+            }，
             "技术指标": {
                 "MA指标": {
-                    "MA5": f"{latest_df['MA5'].iloc[-1]:.2f}",
-                    "MA10": f"{latest_df['MA10'].iloc[-1]:.2f}",
-                    "MA20": f"{latest_df['MA20'].iloc[-1]:.2f}",
-                    "MA60": f"{latest_df['MA60'].iloc[-1]:.2f}",
-                },
+                    "MA5": f"{latest_df['MA5']。iloc[-1]:.2f}"，
+                    "MA10": f"{latest_df['MA10']。iloc[-1]:.2f}"，
+                    "MA20": f"{latest_df['MA20']。iloc[-1]:.2f}"，
+                    "MA60": f"{latest_df['MA60']。iloc[-1]:.2f}"，
+                }，
                 "趋势指标": {
-                    "MACD (指数平滑异同移动平均线)": f"{latest_df['MACD'].iloc[-1]:.2f}",
-                    "DIF (差离值)": f"{latest_df['DIF'].iloc[-1]:.2f}",
-                    "DEA (讯号线)": f"{latest_df['DEA'].iloc[-1]:.2f}",
-                    "TRIX (三重指数平滑平均线)": f"{latest_df['TRIX'].iloc[-1]:.2f}",
-                    "PDI (上升方向线)": f"{latest_df['PDI'].iloc[-1]:.2f}",
-                    "MDI (下降方向线)": f"{latest_df['MDI'].iloc[-1]:.2f}",
-                    "ADX (趋向指标)": f"{latest_df['ADX'].iloc[-1]:.2f}",
-                },
+                    "MACD (指数平滑异同移动平均线)": f"{latest_df['MACD']。iloc[-1]:.2f}"，
+                    "DIF (差离值)": f"{latest_df['DIF']。iloc[-1]:.2f}"，
+                    "DEA (讯号线)": f"{latest_df['DEA']。iloc[-1]:.2f}"，
+                    "TRIX (三重指数平滑平均线)": f"{latest_df['TRIX']。iloc[-1]:.2f}"，
+                    "PDI (上升方向线)": f"{latest_df['PDI']。iloc[-1]:.2f}"，
+                    "MDI (下降方向线)": f"{latest_df['MDI']。iloc[-1]:.2f}"，
+                    "ADX (趋向指标)": f"{latest_df['ADX']。iloc[-1]:.2f}"，
+                }，
                 "摆动指标": {
-                    "RSI (相对强弱指标)": f"{latest_df['RSI'].iloc[-1]:.2f}",
-                    "KDJ-K (随机指标K值)": f"{latest_df['K'].iloc[-1]:.2f}",
-                    "KDJ-D (随机指标D值)": f"{latest_df['D'].iloc[-1]:.2f}",
-                    "KDJ-J (随机指标J值)": f"{latest_df['J'].iloc[-1]:.2f}",
-                    "BIAS (乖离率)": f"{latest_df['BIAS1'].iloc[-1]:.2f}",
-                    "CCI (顺势指标)": f"{latest_df['CCI'].iloc[-1]:.2f}",
-                },
+                    "RSI (相对强弱指标)": f"{latest_df['RSI']。iloc[-1]:.2f}"，
+                    "KDJ-K (随机指标K值)": f"{latest_df['K']。iloc[-1]:.2f}"，
+                    "KDJ-D (随机指标D值)": f"{latest_df['D']。iloc[-1]:.2f}"，
+                    "KDJ-J (随机指标J值)": f"{latest_df['J']。iloc[-1]:.2f}"，
+                    "BIAS (乖离率)": f"{latest_df['BIAS1']。iloc[-1]:.2f}"，
+                    "CCI (顺势指标)": f"{latest_df['CCI']。iloc[-1]:.2f}"，
+                }，
                 "成交量指标": {
-                    "VR (成交量比率)": f"{latest_df['VR'].iloc[-1]:.2f}",
-                    "AR (人气指标)": f"{latest_df['AR'].iloc[-1]:.2f}",
-                    "BR (意愿指标)": f"{latest_df['BR'].iloc[-1]:.2f}",
-                },
+                    "VR (成交量比率)": f"{latest_df['VR']。iloc[-1]:.2f}"，
+                    "AR (人气指标)": f"{latest_df['AR']。iloc[-1]:.2f}"，
+                    "BR (意愿指标)": f"{latest_df['BR']。iloc[-1]:.2f}"，
+                }，
                 "动量指标": {
-                    "ROC (变动率)": f"{latest_df['ROC'].iloc[-1]:.2f}",
-                    "MTM (动量指标)": f"{latest_df['MTM'].iloc[-1]:.2f}",
+                    "ROC (变动率)": f"{latest_df['ROC']。iloc[-1]:.2f}"，
+                    "MTM (动量指标)": f"{latest_df['MTM']。iloc[-1]:.2f}"，
                     "DPO (区间振荡)": f"{latest_df['DPO'].iloc[-1]:.2f}",
                 },
                 "布林带": {
@@ -611,13 +611,8 @@ class StockAnalyzer:
 
 
 if __name__ == "__main__":
-    # stock_info = {
-    #     '上证指数': 'sh000001',
-    #     '深证成指': 'sz399001',
-    #     '中远海控': 'sh601919'
-    # }
     stock_info = {
-        '中远海控': 'sh601919'
+        '上证指数': 'sh000001'
     }
     analyzer = StockAnalyzer(stock_info)
     report_path = analyzer.run_analysis()
