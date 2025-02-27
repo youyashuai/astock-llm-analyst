@@ -4,7 +4,7 @@
 
 ## 项目简介
 
-AStock-LLM-Analyst 是一个A股市场的技术分析工具，通过采集股票历史数据，计算常见技术指标（如MACD、KDJ、RSI等），并利用大语言模型（Deepseek）生成可读性强的投资建议和市场分析。
+AStock-LLM-Analyst 是一个A股市场的技术分析工具，通过[Ashare](https://github.com/mpquant/Ashare)采集股票历史数据，[MyTT](https://github.com/mpquant/MyTT)计算常见技术指标（如MACD、KDJ、RSI等），并利用大语言模型（Deepseek）生成可读性强的投资建议和市场分析。
 
 该工具能够自动生成完整的HTML分析报告，包括基础数据分析、技术指标计算、趋势判断、支撑/阻力位识别以及AI辅助的专业投资建议。
 
@@ -35,7 +35,7 @@ analyzer = StockAnalyzer(stock_info, deepseek_api_key='{Replace with your Key}')
 1. 在`main.py`中设置要分析的股票代码：
 ```python
 stock_info = {
-    '股票名称': '股票代码',  # 例如 '中远海控': 'sh601919'
+    '股票名称': '股票代码',  # 例如 '上证指数': 'sh000001'
 }
 ```
 
